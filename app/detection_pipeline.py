@@ -192,7 +192,7 @@ if __name__ == "__main__":
     payload = build_event_payload(
         frame=frame,
         model=model,
-        employee_gallery_path="C:\Users\sofia\ShelfAgent\gallery",
+        employee_gallery_path="C:/Users/sofia/ShelfAgent/gallery",
         source="image_upload",
         zone_id="zone_01",
     )
