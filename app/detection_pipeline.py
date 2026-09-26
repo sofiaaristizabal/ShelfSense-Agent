@@ -13,9 +13,16 @@ from collections import Counter
 from datetime import datetime, timezone
 from typing import Any
 
+import cv2
 import numpy as np
 import pandas as pd
 from ultralytics import YOLO
+
+try:
+    from deepface import DeepFace
+    DEEPFACE_AVAILABLE = True
+except ImportError:
+    DEEPFACE_AVAILABLE = False
 
 
 # ---------------------------------------------------------------------------
@@ -72,13 +79,6 @@ def run_face_recognition(
     Returns one entry per detected face, with the closest matching identity
     if one was found within DeepFace's distance threshold.
     """
-
-    try:
-        from deepface import DeepFace
-        DEEPFACE_AVAILABLE = True
-    except ImportError:
-        DEEPFACE_AVAILABLE = False
-
     if not DEEPFACE_AVAILABLE:
         raise RuntimeError("deepface is not installed")
 
@@ -144,6 +144,44 @@ def _employee_id_from_path(identity_path: str) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Annotated image (boxes drawn, for the dashboard / SNAPSHOT.annotated_s3_url)
+# ---------------------------------------------------------------------------
+
+def draw_annotations(
+    frame: np.ndarray,
+    detections: list[dict[str, Any]],
+    faces: list[dict[str, Any]] | None = None,
+) -> np.ndarray:
+    """Return a copy of frame with item and face bounding boxes drawn on it."""
+    annotated = frame.copy()
+
+    for det in detections:
+        x1, y1, x2, y2 = [int(v) for v in det["bbox"]]
+        cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        label = f'{det["class_name"]} {det["confidence"]:.2f}'
+        cv2.putText(annotated, label, (x1, max(y1 - 8, 0)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
+
+    for face in (faces or []):
+        if not face.get("bbox"):
+            continue
+        x1, y1, x2, y2 = [int(v) for v in face["bbox"]]
+        label = face["employee_id"] if face["recognized"] else "unrecognized"
+        cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 0, 255), 2)
+        cv2.putText(annotated, label, (x1, max(y1 - 8, 0)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2, cv2.LINE_AA)
+
+    return annotated
+
+
+def encode_jpeg(frame: np.ndarray) -> bytes:
+    ok, buf = cv2.imencode(".jpg", frame)
+    if not ok:
+        raise ValueError("failed to encode frame as JPEG")
+    return buf.tobytes()
+
+
+# ---------------------------------------------------------------------------
 # Combined event payload
 # ---------------------------------------------------------------------------
 
@@ -187,12 +225,12 @@ if __name__ == "__main__":
     import json
 
     model = YOLO("best.pt")
-    frame = cv2.imread("IMG_7023.jpg")
+    frame = cv2.imread("IMG_7116.JPG")
 
     payload = build_event_payload(
         frame=frame,
         model=model,
-        employee_gallery_path="C:/Users/sofia/ShelfAgent/gallery",
+        employee_gallery_path="C:/Users/sofia/OneDrive/Documentos/Proyecto ShelfAgent/database",
         source="image_upload",
         zone_id="zone_01",
     )
