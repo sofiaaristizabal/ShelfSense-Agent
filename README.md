@@ -27,8 +27,6 @@ The sprint goals are documented in the [Sprint Goals wiki page](https://github.c
 
 ## 4. User Stories Addressed in the Last Sprint
 
-The following are the **10 distinct user stories shown in the team-provided Sprint 7 screenshots** (duplicates across screenshots removed). Their presence in the screenshots does not independently establish that all are completed.
-
 | GitHub issue | User story | Status / evidence |
 |---|---|---|
 | [#51](https://github.com/sofiaaristizabal/ShelfSense-Agent/issues/51) | Review Low-Confidence Results | Sprint 7 screenshot; completion/evidence to verify |
