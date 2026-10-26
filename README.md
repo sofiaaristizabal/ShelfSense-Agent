@@ -12,8 +12,6 @@ Warehouse workers often count items manually, a time-consuming process that can 
 
 **Product goal:** Develop a computer-vision-assisted inventory system that identifies and counts items from visual inputs, presents results for human verification, and progressively supports inventory updates, movement history, relevant alerts, and dashboard-based supervision.
 
-The initial focus is inventory counting, movement traceability, and actionable alerts—not physical warehouse reorganization.
-
 ## 3. Sprint Goals
 | Sprint | Goal |
 |---|---|
