@@ -60,13 +60,14 @@ The project's documented sprint goals describe work on the detection model, live
 The product requirements distinguish planned capabilities (such as movement tracking, employee identification, history, alerts, and support for additional visual inputs) from features that have already been demonstrated. See the [Product Requirements Document](https://github.com/sofiaaristizabal/ShelfSense-Agent/wiki/Product-Requirements-Document).
 
 ## 8. Future Work
-Subject to prioritization and validation against the backlog:
+
 - Validate item counting accuracy and robustness under varying lighting, camera angles, and occlusion.
 - Strengthen result review and correction, and verify that inventory state remains consistent.
 - Have the live camera model working on an actual security camera than can be on 24/7 and can be pointed at specific warehouse points.
 - Extend and validate movement traceability, history, and stockout alerts.
 - Improve end-to-end tests, operational documentation, and deployment reliability.
 - Address employee consent, access controls, and privacy requirements before any facial recognition involving identifiable employees.
+- Be able to use other visual sources. Have users upload inventory videos, analize smart galsses footage, amongs others. 
 - Add security to the API.
 - Have the warehouse administrator be able to register items trough camera registration.
 - Have the warehouse administrator be able to register employees trough camera registration (like when a face is registered for the iphone face ID). 
