@@ -46,7 +46,7 @@ The sprint goals are documented in the [Sprint Goals wiki page](https://github.c
 
 The architecture diagram shows the user-facing React application, static assets and snapshots in Amazon S3, a live camera application in the warehouse, and the ShelfAgent API (FastAPI in Docker) hosted on Linode. The API uses computer vision and face-analysis libraries, communicates with OpenAI API, and reads and writes information in a Supabase PostgreSQL database. The diagram also includes the service's disk volume.
 
-![image alt)(https://github.com/sofiaaristizabal/ShelfSense-Agent/blob/ac635eb842280885ed1d2d6e17722c38a03c3166/agentt.png)
+![image alt](https://github.com/sofiaaristizabal/ShelfSense-Agent/blob/ac635eb842280885ed1d2d6e17722c38a03c3166/agentt.png)
 
 ## 6. How the Agent Works
 
