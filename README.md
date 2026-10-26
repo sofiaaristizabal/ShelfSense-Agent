@@ -1,4 +1,4 @@
-# ShelfSense-Agent — Sprint 7 Submission
+# ShelfSense-Agent 
 
 **Team:** Team 2  
 **Team members:** Sofia Aristizabal, Miguel Fonseca, Juan Felipe Gómez, Valentina Román  
