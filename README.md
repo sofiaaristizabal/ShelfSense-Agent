@@ -72,7 +72,46 @@ The product requirements distinguish planned capabilities (such as movement trac
 - Have the warehouse administrator be able to register items trough camera registration.
 - Have the warehouse administrator be able to register employees trough camera registration (like when a face is registered for the iphone face ID). 
 
-## 9. Documentation and Supporting Materials
+## 9. Key features
+
+### Computer vision
+- **Custom object detection**: a YOLO model (Ultralytics) trained on our own dataset detects the 7 warehouse item classes in uploaded images and camera frames.
+- **Automatic counting**: items are counted per class in every image, and per zone when a camera is configured.
+- **Employee face recognition**: DeepFace (RetinaFace detector, VGG-Face model) matches faces against a gallery of registered employees. Faces that don't match are kept as "unrecognized".
+- **Annotated snapshots**: every analysis stores the original image, a copy with boxes drawn, and the full raw model output.
+
+### Zones and item placement
+- **Logical warehouse zones**: each camera frame is divided into zones (a 2x2 grid by default, configurable as polygons). Every detection is assigned to a zone.
+- **Designated zone per item**: each item type has a home zone, and items outside it are highlighted in red on the live view.
+
+### Inventory, traceability and alerts
+- **Up-to-date stock**: the latest count of each item, refreshed from the live camera, with a manual override through the API.
+- **Item movement tracking**: when an item moves between zones, returns, or is taken, an event records the item, origin and destination zone, time, snapshot as evidence, and the employee responsible (or an "unrecognized" placeholder).
+- **Stockout alerts**: an alert opens when an item is missing from the warehouse view. There is never more than one open alert per item, and it closes automatically when the item reappears. Alerts can also be resolved manually.
+- **History and queries**: browse snapshots by date range, zone, item or camera, and view an employee's activity timeline.
+
+### Live camera app (runs on-site, 24/7)
+- Live video with zone lines, detection boxes and per-item counts.
+- **Capture & Upload** button (or the SPACE key) sends a frame for analysis, and the result stays on screen for a few minutes.
+- **Automatic movement detection** based on zone counts. It ignores one-frame detection misses and boxes flickering across zone lines.
+- Scheduled full-inventory snapshot every 24 hours.
+- Resilient by design: reconnects to a dropped camera, queues uploads, and keeps running if the server or database is unreachable.
+- Prepares its own database records on first run (zones, camera, "unrecognized" employee, one item per YOLO class).
+
+### AI assistant
+- Ask questions in natural language about stock, snapshots, employee activity and alerts.
+- The assistant answers using tool calling over the database, with a fixed set of read-only queries. The LLM never writes SQL and only answers from the data returned.
+- Works with any OpenAI-compatible API, so the provider can be changed from configuration.
+
+### Architecture and deployment
+- React dashboard hosted on S3, FastAPI backend in Docker on Linode, PostgreSQL on Supabase, snapshots in S3, and the live camera app on a warehouse PC.
+- REST API with interactive documentation (`/docs`) and a health endpoint.
+- Configuration through environment variables. The model weights and the employee gallery are mounted as volumes.
+
+### Authentication
+- Authentication is delegated to a third party. It uses amazon cognito.
+
+## 10. Documentation and Supporting Materials
 - [Project wiki / documentation](https://github.com/sofiaaristizabal/ShelfSense-Agent/wiki)
 - [Product Requirements Document](https://github.com/sofiaaristizabal/ShelfSense-Agent/wiki/Product-Requirements-Document)
 - [Sprint Goals](https://github.com/sofiaaristizabal/ShelfSense-Agent/wiki/Sprint-Goals)
