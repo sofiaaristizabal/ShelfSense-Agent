@@ -80,6 +80,7 @@ The product requirements distinguish planned capabilities (such as movement trac
 - [Product backlog](https://github.com/users/sofiaaristizabal/projects/1)
 - [Source code repository](https://github.com/sofiaaristizabal/ShelfSense-Agent)
 - [GitHub issues / user stories](https://github.com/sofiaaristizabal/ShelfSense-Agent/issues)
+- [Live camera code](https://github.com/sofiaaristizabal/ShelfAgent-live-camera.git)
 - **Additional evidence:** Demo, test results, deployment notes, and screenshots/videos are accessible through the repository or should be linked here if separately required by the instructor.
 
 
