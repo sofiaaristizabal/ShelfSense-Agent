@@ -81,6 +81,7 @@ The product requirements distinguish planned capabilities (such as movement trac
 - [Source code repository](https://github.com/sofiaaristizabal/ShelfSense-Agent)
 - [GitHub issues / user stories](https://github.com/sofiaaristizabal/ShelfSense-Agent/issues)
 - [Live camera code](https://github.com/sofiaaristizabal/ShelfAgent-live-camera.git)
+- You can also pull the API image from docker hub here: **docker pull sofiaaristizabal/shelfagent-api-rag-api:latest**
 - **Additional evidence:** Demo, test results, deployment notes, and screenshots/videos are accessible through the repository or should be linked here if separately required by the instructor.
 
 
